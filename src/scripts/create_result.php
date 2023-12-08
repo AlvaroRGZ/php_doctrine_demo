@@ -1,11 +1,11 @@
 <?php
 
 /**
- * src/create_result.php
+ * src/create_result_command.php
  *
  * @category Utils
  * @license  https://opensource.org/licenses/MIT MIT License
- * @link     https://miw.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
+ * @link     https://www.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
  */
 
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
@@ -18,37 +18,34 @@ use MiW\Results\Utility\Utils;
 // Carga las variables de entorno
 Utils::loadEnv(dirname(__DIR__, 2));
 
-if ($argc < 3 || $argc > 4) {
-    $fich = basename(__FILE__);
-    echo <<< MARCA_FIN
+// Obtener argumentos de la línea de comandos
+$options = getopt("n:r:");
 
-    Usage: $fich <Result> <UserId> [<Timestamp>]
-
-MARCA_FIN;
-    exit(0);
+if (empty($options['n']) || empty($options['r'])) {
+    echo "Usage: php create_result_command.php -n <username> -r <result>" . PHP_EOL;
+    exit(1);
 }
 
-$newResult    = (int) $argv[1];
-$userId       = (int) $argv[2];
-$newTimestamp = $argv[3] ?? new DateTime('now');
+$username = $options['n'];
+$resultValue = $options['r'];
 
 $entityManager = DoctrineConnector::getEntityManager();
 
-/** @var User $user */
-$user = $entityManager
-    ->getRepository(User::class)
-    ->findOneBy([ 'id' => $userId ]);
-if (!$user instanceof User) {
-    echo "Usuario $userId no encontrado" . PHP_EOL;
-    exit(0);
+// Obtener el usuario por su nombre de usuario
+$userRepository = $entityManager->getRepository(User::class);
+$user = $userRepository->findOneBy(['username' => $username]);
+
+if (!$user) {
+    echo "Error: User not found with username $username." . PHP_EOL;
+    exit(1);
 }
 
-$result = new Result($newResult, $user, $newTimestamp);
+$result = new Result((int) $resultValue, $user);
+
 try {
     $entityManager->persist($result);
     $entityManager->flush();
-    echo 'Created Result with ID ' . $result->getId()
-        . ' USER ' . $user->getUsername() . PHP_EOL;
+    echo 'Created Result with ID #' . $result->getId() . PHP_EOL;
 } catch (Throwable $exception) {
-    echo $exception->getMessage();
+    echo $exception->getMessage() . PHP_EOL;
 }

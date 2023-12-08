@@ -8,16 +8,19 @@
  */
 
 use MiW\Results\Entity\User;
+use MiW\Results\Entity\Result;
 use MiW\Results\Utility\DoctrineConnector;
 
 function funcionHomePage(): void
 {
     global $routes;
 
-    $rutaListado = $routes->get('ruta_user_list')->getPath();
+    $rutaListadoUsuarios = $routes->get('ruta_user_list')->getPath();
+    $rutaListadoResultados = $routes->get('ruta_result_list')->getPath();
     echo <<< MARCA_FIN
     <ul>
-        <li><a href="$rutaListado">Listado Usuarios</a></li>
+        <li><a href="$rutaListadoUsuarios">Listado Usuarios</a></li>
+        <li><a href="$rutaListadoResultados">Listado Resultados</a></li>
     </ul>
     MARCA_FIN;
 }
@@ -28,7 +31,28 @@ function funcionListadoUsuarios(): void
 
     $userRepository = $entityManager->getRepository(User::class);
     $users = $userRepository->findAll();
-    var_dump($users);
+    $usersText = "<ul>";
+    foreach ($users as $user) {
+        $jsonUser = json_encode($user->jsonSerialize(), JSON_PRETTY_PRINT);
+        $usersText = $usersText . "<li>$jsonUser</li>";
+    }
+    $usersText = $usersText . "<ul>";
+    echo $usersText;
+}
+
+function funcionListadoResultados(): void
+{
+    $entityManager = DoctrineConnector::getEntityManager();
+
+    $resultsRepository = $entityManager->getRepository(Result::class);
+    $results = $resultsRepository->findAll();
+    $resultsText = "<ul>";
+    foreach ($results as $result) {
+        $jsonUser = json_encode($result->jsonSerialize(), JSON_PRETTY_PRINT);
+        $resultsText = $resultsText . "<li>$jsonUser</li>";
+    }
+    $resultsText = $resultsText . "<ul>";
+    echo $resultsText;
 }
 
 function funcionUsuario(string $name): void

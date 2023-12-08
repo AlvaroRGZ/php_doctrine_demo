@@ -68,7 +68,11 @@ class Result implements JsonSerializable, Stringable
         $this->id     = 0;
         $this->result = $result;
         $this->user   = $user;
-        $this->time   = $time;
+        if ($time == null) {
+            $this->time = new DateTime();
+        } else {
+            $this->time = $time;
+        }
     }
 
     /**

@@ -11,6 +11,12 @@ ruta_user_list:
     methods:
       - GET
 
+ruta_result_list:
+    path: /results
+    controller: 'funcionListadoResultados'
+    methods:
+        - GET
+
 ruta_user:
     path:     /users/{name}
     controller: 'funcionUsuario'
