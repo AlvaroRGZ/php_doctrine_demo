@@ -1,7 +1,7 @@
 <?php
 
 /**
- * src/read_user.php
+ * src/create_result_command.php
  *
  * @category Utils
  * @license  https://opensource.org/licenses/MIT MIT License
@@ -26,15 +26,15 @@ if (empty($options['n'])) {
 
 $username = $options['n'];
 
-$userAdapter = new UserAdapter();
+$resultAdapter = new ResultAdapter();
 
 try {
-    $user = $userAdapter->readUserByUsername($username);
+    $result = $resultAdapter->readResultByResultname($username);
 
-    if ($user) {
-        echo json_encode($user->jsonSerialize()) . PHP_EOL;
+    if ($result) {
+        echo json_encode($result->jsonSerialize()) . PHP_EOL;
     } else {
-        echo "User " . $username . " not found" . PHP_EOL;
+        echo "Result " . $username . " not found" . PHP_EOL;
     }
 } catch (Throwable $exception) {
     echo $exception->getMessage() . PHP_EOL;
