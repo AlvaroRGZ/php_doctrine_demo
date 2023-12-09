@@ -88,6 +88,18 @@ class UserAdapter {
         return null;
     }
 
+
+    public function readUserById(int $id)
+    {
+        $entityManager = DoctrineConnector::getEntityManager();
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['id' => $id]);
+        if ($user) {
+            return $user;
+        }
+        return null;
+    }
+
     public function updateUser(string $username, string $newUsername, string $newEmail, string $newPassword, bool $enabled, bool $isAdmin) {
         $entityManager = DoctrineConnector::getEntityManager();
 

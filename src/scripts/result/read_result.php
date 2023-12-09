@@ -20,7 +20,7 @@ Utils::loadEnv(dirname(__DIR__, 3));
 $options = getopt("n:i:");
 
 if (empty($options['n']) && empty($options['i'])) {
-    echo "Usage: php read_user.php [-n <username>] | [-i <id>]" . PHP_EOL;
+    echo "Usage: php read_result.php [-n <username>] | [-i <id>]" . PHP_EOL;
     exit(1);
 }
 
