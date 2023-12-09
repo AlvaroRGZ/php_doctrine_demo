@@ -83,6 +83,21 @@ class Result implements JsonSerializable, Stringable
         return $this->id;
     }
 
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function setResult(int $result): void
+    {
+        $this->result = $result;
+    }
+
+    public function setTime(DateTime $dateTime): void
+    {
+        $this->time= $dateTime;
+    }
+
     /**
      * Implements __toString()
      *

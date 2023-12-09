@@ -12,10 +12,12 @@ namespace MiW\Results\Adapters;
 
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
+use DateTime;
 use MiW\Results\Entity\Result;
 use MiW\Results\Entity\User;
 use MiW\Results\Utility\DoctrineConnector;
 use MiW\Results\Utility\Utils;
+use Throwable;
 
 // Carga las variables de entorno
 Utils::loadEnv(dirname(__DIR__, 2));
@@ -42,17 +44,6 @@ class ResultAdapter {
             echo $exception->getMessage() . PHP_EOL;
         }
         return true;
-    }
-
-    public function createResult(Result $result): void {
-        $entityManager = DoctrineConnector::getEntityManager();
-        try {
-            $entityManager->persist($result);
-            $entityManager->flush();
-            echo 'Created Result ' . $result->getResultname() . ' with ID #' . $result->getId() . PHP_EOL;
-        } catch (Throwable $exception) {
-            echo $exception->getMessage() . PHP_EOL;
-        }
     }
 
     public function deleteResult(string $resultname): bool {
@@ -107,19 +98,31 @@ class ResultAdapter {
         return null;
     }
 
-    public function updateResult(string $resultname, string $newResultname, string $newEmail, string $newPassword, bool $enabled, bool $isAdmin) {
+    public function updateResult(int $result, string $oldUsername, string $newUsername): bool {
         $entityManager = DoctrineConnector::getEntityManager();
+        $userRepository = $entityManager->getRepository(User::class);
+        $newuser = $userRepository->findOneBy(['username' => $newUsername]);
+
+        if (!$newuser) {
+            echo "New user " . $newUsername . " not found" . PHP_EOL;
+            return false;
+        }
+
+        $olduser = $userRepository->findOneBy(['username' => $oldUsername]);
+
+        if (!$olduser) {
+            echo "Old user " . $newUsername . " not found" . PHP_EOL;
+            return false;
+        }
 
         $resultRepository = $entityManager->getRepository(Result::class);
-        $result = $resultRepository->findOneBy(['username' => $resultname]);
+        $updatingresult = $resultRepository->findOneBy(['user' => $olduser]);
 
-        if ($result) {
+        if ($updatingresult) {
             try {
-                $result->setResultname($newResultname);
-                $result->setEmail($newEmail);
-                $result->setEnabled($enabled);
-                $result->setIsAdmin($isAdmin);
-                $result->setPassword($newPassword);
+                $updatingresult->setResult($result);
+                $updatingresult->setTime(new DateTime());
+                $updatingresult->setUser($newuser);
 
                 $entityManager->flush();
                 return true;
