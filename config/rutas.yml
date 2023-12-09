@@ -17,6 +17,13 @@ ruta_result_list:
     methods:
         - GET
 
+ruta_read_user_form:
+    path: /read/user
+    controller: 'funcionReadUserForm'
+    methods:
+        - GET
+        - POST
+
 ruta_user:
     path:     /users/{name}
     controller: 'funcionUsuario'

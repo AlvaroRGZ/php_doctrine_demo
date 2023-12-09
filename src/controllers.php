@@ -17,11 +17,18 @@ function funcionHomePage(): void
 
     $rutaListadoUsuarios = $routes->get('ruta_user_list')->getPath();
     $rutaListadoResultados = $routes->get('ruta_result_list')->getPath();
+    $formReadUser = $routes->get('ruta_read_user_form')->getPath();
     echo <<< MARCA_FIN
+    <h3>Listas de datos</h3>
     <ul>
         <li><a href="$rutaListadoUsuarios">Listado Usuarios</a></li>
         <li><a href="$rutaListadoResultados">Listado Resultados</a></li>
     </ul>
+    <h3>Formularios</h3>
+    <ul>
+        <li><a href="$rutaListadoResultados">Listado Resultados</a></li>
+    </ul>
+
     MARCA_FIN;
 }
 
@@ -58,4 +65,9 @@ function funcionListadoResultados(): void
 function funcionUsuario(string $name): void
 {
     echo $name;
+}
+
+function funcionReadUserForm(): void
+{
+    require_once 'views/user/read_user.php';
 }
