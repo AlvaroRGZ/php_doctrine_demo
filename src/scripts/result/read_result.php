@@ -17,25 +17,26 @@ use MiW\Results\Utility\Utils;
 Utils::loadEnv(dirname(__DIR__, 3));
 
 // Obtener argumentos de la línea de comandos
-$options = getopt("n:");
+$options = getopt("n:i:");
 
-if (empty($options['n'])) {
-    echo "Usage: php read_user.php -n <username>" . PHP_EOL;
+if (empty($options['n']) && empty($options['i'])) {
+    echo "Usage: php read_user.php [-n <username>] | [-i <id>]" . PHP_EOL;
     exit(1);
 }
 
-$username = $options['n'];
-
+$result = null;
 $resultAdapter = new ResultAdapter();
 
-try {
+if (!empty($options['i'])) {
+    $id = $options['i'];
+    $result = $resultAdapter->readResultById($id);
+} else {
+    $username = $options['n'];
     $result = $resultAdapter->readResultByResultname($username);
+}
 
-    if ($result) {
-        echo json_encode($result->jsonSerialize()) . PHP_EOL;
-    } else {
-        echo "Result " . $username . " not found" . PHP_EOL;
-    }
-} catch (Throwable $exception) {
-    echo $exception->getMessage() . PHP_EOL;
+if ($result) {
+    echo json_encode($result->jsonSerialize()) . PHP_EOL;
+} else {
+    echo "Result not found" . PHP_EOL;
 }

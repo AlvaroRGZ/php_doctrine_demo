@@ -98,6 +98,16 @@ class ResultAdapter {
         return null;
     }
 
+    public function readResultById(int $id): Result | null {
+        $entityManager = DoctrineConnector::getEntityManager();
+        $resultRepository = $entityManager->getRepository(Result::class);
+        $result = $resultRepository->findOneBy(['id' => $id]);
+        if ($result) {
+            return $result;
+        }
+        return null;
+    }
+
     public function updateResult(int $result, string $oldUsername, string $newUsername): bool {
         $entityManager = DoctrineConnector::getEntityManager();
         $userRepository = $entityManager->getRepository(User::class);
