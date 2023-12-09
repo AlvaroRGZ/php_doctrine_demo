@@ -8,7 +8,7 @@
  * @link     https://www.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
  */
 
-require dirname(__DIR__, 2) . '/vendor/autoload.php';
+require dirname(__DIR__, 3) . '/vendor/autoload.php';
 
 use MiW\Results\Entity\User;
 use MiW\Results\Adapters\UserAdapter;
@@ -16,7 +16,7 @@ use MiW\Results\Utility\DoctrineConnector;
 use MiW\Results\Utility\Utils;
 
 // Carga las variables de entorno
-Utils::loadEnv(dirname(__DIR__, 2));
+Utils::loadEnv(dirname(__DIR__, 3));
 
 // Obtener argumentos de la línea de comandos
 $options = getopt("o:n:e:p:b:a:");
@@ -33,8 +33,6 @@ $email = $options['e'];
 $password = $options['p'];
 $enabled = $options['b'] == "1";
 $isAdmin = $options['a'] == "1";
-
-$entityManager = DoctrineConnector::getEntityManager();
 
 $userAdapter = new UserAdapter();
 
