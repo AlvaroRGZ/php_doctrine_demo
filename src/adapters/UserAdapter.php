@@ -87,4 +87,28 @@ class UserAdapter {
         }
         return null;
     }
+
+    public function updateUser(string $username, string $newUsername, string $newEmail, string $newPassword, bool $enabled, bool $isAdmin) {
+        $entityManager = DoctrineConnector::getEntityManager();
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['username' => $username]);
+
+        if ($user) {
+            try {
+                $user->setUsername($newUsername);
+                $user->setEmail($newEmail);
+                $user->setEnabled($enabled);
+                $user->setIsAdmin($isAdmin);
+                $user->setPassword($newPassword);
+
+                $entityManager->flush();
+                return true;
+            } catch (Throwable $exception) {
+                echo $exception->getMessage() . PHP_EOL;
+            }
+        }
+
+        return false;
+    }
 }
