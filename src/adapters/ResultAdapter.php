@@ -57,14 +57,20 @@ class ResultAdapter {
 
     public function deleteResult(string $resultname): bool {
         $entityManager = DoctrineConnector::getEntityManager();
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['username' => $resultname]);
+
+        if (!$user) {
+            return false;
+        }
+
         $resultRepository = $entityManager->getRepository(Result::class);
-        $result = $resultRepository->findOneBy(['username' => $resultname]);
+        $result = $resultRepository->findOneBy(['user' => $user->getId()]);
 
         if ($result) {
             try {
                 $entityManager->remove($result);
                 $entityManager->flush();
-                echo 'Deleted Result ' . $resultname . PHP_EOL;
             } catch (Throwable $exception) {
                 echo $exception->getMessage() . PHP_EOL;
             }
