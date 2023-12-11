@@ -101,7 +101,7 @@ function funcionReadResultForm(): void
 
 function funcionCreateResultForm(): void
 {
-    require_once 'views/result/read_result.php';
+    require_once 'views/result/create_result.php';
 }
 
 function funcionDeletedResultForm(): void
