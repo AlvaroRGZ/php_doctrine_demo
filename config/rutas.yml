@@ -45,6 +45,13 @@ ruta_update_user_form:
         - GET
         - POST
 
+ruta_read_result_form:
+    path: /read/result
+    controller: 'funcionReadResultForm'
+    methods:
+        - GET
+        - POST
+
 ruta_user:
     path:     /users/{name}
     controller: 'funcionUsuario'

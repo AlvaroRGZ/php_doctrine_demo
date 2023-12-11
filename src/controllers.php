@@ -93,3 +93,23 @@ function funcionUpdateUserForm(): void
 {
     require_once 'views/user/update_user.php';
 }
+
+function funcionReadResultForm(): void
+{
+    require_once 'views/result/read_result.php';
+}
+
+function funcionCreateResultForm(): void
+{
+    require_once 'views/result/read_result.php';
+}
+
+function funcionDeletedResultForm(): void
+{
+    require_once 'views/result/read_result.php';
+}
+
+function funcionUpdateResultForm(): void
+{
+    require_once 'views/result/read_result.php';
+}
