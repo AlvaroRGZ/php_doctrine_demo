@@ -71,6 +71,26 @@ class ResultAdapter {
         }
     }
 
+
+    public function deleteResultById(int $resultId)
+    {
+        $entityManager = DoctrineConnector::getEntityManager();
+        $resultRepository = $entityManager->getRepository(Result::class);
+        $result = $resultRepository->findOneBy(['id' => $resultId]);
+
+        if ($result) {
+            try {
+                $entityManager->remove($result);
+                $entityManager->flush();
+            } catch (Throwable $exception) {
+                echo $exception->getMessage() . PHP_EOL;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function existsResultByResultname(string $resultname): bool {
         $entityManager = DoctrineConnector::getEntityManager();
         $resultRepository = $entityManager->getRepository(Result::class);

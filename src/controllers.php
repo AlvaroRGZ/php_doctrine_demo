@@ -17,10 +17,17 @@ function funcionHomePage(): void
 
     $rutaListadoUsuarios = $routes->get('ruta_user_list')->getPath();
     $rutaListadoResultados = $routes->get('ruta_result_list')->getPath();
+
     $formReadUser = $routes->get('ruta_read_user_form')->getPath();
     $formCreateUser = $routes->get('ruta_create_user_form')->getPath();
     $formDeleteUser = $routes->get('ruta_delete_user_form')->getPath();
     $formUpdateUser = $routes->get('ruta_update_user_form')->getPath();
+
+    $formReadResult = $routes->get('ruta_read_result_form')->getPath();
+    $formCreateResult = $routes->get('ruta_create_result_form')->getPath();
+    $formDeleteResult = $routes->get('ruta_delete_result_form')->getPath();
+    $formUpdateResult = $routes->get('ruta_update_result_form')->getPath();
+
     echo <<< MARCA_FIN
     <h3>Listas de datos</h3>
     <ul>
@@ -34,6 +41,13 @@ function funcionHomePage(): void
         <li><a href="$formCreateUser">Crear</a></li>
         <li><a href="$formDeleteUser">Borrar</a></li>
         <li><a href="$formUpdateUser">Actualizar</a></li>
+    </ul>
+    <h4>Resultados</h4>
+    <ul>
+        <li><a href="$formReadResult">Leer</a></li>
+        <li><a href="$formCreateResult">Crear</a></li>
+        <li><a href="$formDeleteResult">Borrar</a></li>
+        <li><a href="$formUpdateResult">Actualizar</a></li>
     </ul>
 
     MARCA_FIN;
@@ -104,12 +118,12 @@ function funcionCreateResultForm(): void
     require_once 'views/result/create_result.php';
 }
 
-function funcionDeletedResultForm(): void
+function funcionDeleteResultForm(): void
 {
-    require_once 'views/result/read_result.php';
+    require_once 'views/result/delete_result.php';
 }
 
 function funcionUpdateResultForm(): void
 {
-    require_once 'views/result/read_result.php';
+    require_once 'views/result/update_result.php';
 }

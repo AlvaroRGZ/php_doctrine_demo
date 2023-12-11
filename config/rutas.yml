@@ -59,6 +59,20 @@ ruta_create_result_form:
         - GET
         - POST
 
+ruta_delete_result_form:
+    path: /delete/result
+    controller: 'funcionDeleteResultForm'
+    methods:
+        - GET
+        - POST
+        -
+ruta_update_result_form:
+    path: /update/result
+    controller: 'funcionUpdateResultForm'
+    methods:
+        - GET
+        - POST
+
 ruta_user:
     path:     /users/{name}
     controller: 'funcionUsuario'
