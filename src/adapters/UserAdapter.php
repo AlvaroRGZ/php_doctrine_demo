@@ -38,14 +38,16 @@ class UserAdapter {
         }
     }
 
-    public function createUser(User $user): void {
+    public function createUser(User $user): bool {
         $entityManager = DoctrineConnector::getEntityManager();
         try {
             $entityManager->persist($user);
             $entityManager->flush();
             echo 'Created User ' . $user->getUsername() . ' with ID #' . $user->getId() . PHP_EOL;
+            return true;
         } catch (Throwable $exception) {
             echo $exception->getMessage() . PHP_EOL;
+            return false;
         }
     }
 

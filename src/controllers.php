@@ -71,3 +71,8 @@ function funcionReadUserForm(): void
 {
     require_once 'views/user/read_user.php';
 }
+
+function funcionCreateUserForm(): void
+{
+    require_once 'views/user/create_user.php';
+}

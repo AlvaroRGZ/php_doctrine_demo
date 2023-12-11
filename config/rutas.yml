@@ -24,6 +24,13 @@ ruta_read_user_form:
         - GET
         - POST
 
+ruta_create_user_form:
+    path: /create/user
+    controller: 'funcionCreateUserForm'
+    methods:
+        - GET
+        - POST
+
 ruta_user:
     path:     /users/{name}
     controller: 'funcionUsuario'
