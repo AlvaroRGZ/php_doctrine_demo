@@ -30,6 +30,20 @@ ruta_create_user_form:
     methods:
         - GET
         - POST
+        -
+ruta_delete_user_form:
+    path: /delete/user
+    controller: 'funcionDeleteUserForm'
+    methods:
+        - GET
+        - POST
+
+ruta_update_user_form:
+    path: /update/user
+    controller: 'funcionUpdateUserForm'
+    methods:
+        - GET
+        - POST
 
 ruta_user:
     path:     /users/{name}
