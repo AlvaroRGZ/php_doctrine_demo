@@ -13,13 +13,14 @@ require dirname(__DIR__, 3) . '/vendor/autoload.php';
 use MiW\Results\Entity\User;
 use MiW\Results\Adapters\UserAdapter;
 use MiW\Results\Utility\DoctrineConnector;
+use MiW\Results\Utility\JSONResponse;
 use MiW\Results\Utility\Utils;
 
 // Carga las variables de entorno
 Utils::loadEnv(dirname(__DIR__, 3));
 
 // Obtener argumentos de la línea de comandos
-$options = getopt("o:n:e:p:b:a:");
+$options = getopt("o:n:e:p:b:a:", ["json"]);
 
 if (empty($options['o']) || empty($options['n']) || empty($options['e']) ||
     empty($options['p']) || empty($options['b']) || empty($options['a'])) {
@@ -38,9 +39,19 @@ $userAdapter = new UserAdapter();
 
 try {
     if ($userAdapter->updateUser($oldusername, $username, $email, $password, $enabled, $isAdmin)) {
-        echo "Updated user " . $oldusername . " now: " . $username . PHP_EOL;
+        $message = "Updated user " . $oldusername . " now: " . $username;
+        if (isset($options["json"])) {
+            echo new JSONResponse("success", $message) . PHP_EOL;
+        } else {
+            echo $message . PHP_EOL;
+        }
     } else {
-        echo "User " . $oldusername . " not found" . PHP_EOL;
+        $message = "User " . $oldusername . " not found";
+        if (isset($options["json"])) {
+            echo new JSONResponse("error", $message) . PHP_EOL;
+        } else {
+            echo $message . PHP_EOL;
+        }
     }
 } catch (Throwable $exception) {
     echo $exception->getMessage() . PHP_EOL;
