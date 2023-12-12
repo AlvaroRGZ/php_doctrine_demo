@@ -197,5 +197,6 @@ class ResultAdapterTest extends TestCase
         // Clean up the created result
         $this->cleanResult($newUsername);
         $this->cleanUser($username);
+        $this->cleanUser($newUsername);
     }
 }
