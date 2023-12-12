@@ -23,7 +23,7 @@ Utils::loadEnv(dirname(__DIR__, 2));
 class UserAdapter {
     public function __construct(){}
 
-    public function createUserFromScratch(string $username, string $email, string $password): void {
+    public function createUserFromScratch(string $username, string $email, string $password): bool {
         $user = new User();
         $user->setUsername($username);
         $user->setEmail($email);
@@ -36,7 +36,9 @@ class UserAdapter {
             echo 'Created User ' . $user->getUsername() . ' with ID #' . $user->getId() . PHP_EOL;
         } catch (Throwable $exception) {
             echo $exception->getMessage() . PHP_EOL;
+            return false;
         }
+        return true;
     }
 
     public function createUser(User $user): bool {

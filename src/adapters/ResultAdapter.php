@@ -62,10 +62,11 @@ class ResultAdapter {
             try {
                 $entityManager->remove($result);
                 $entityManager->flush();
+                return true;
             } catch (Throwable $exception) {
                 echo $exception->getMessage() . PHP_EOL;
+                return true;
             }
-            return true;
         } else {
             return false;
         }
@@ -84,21 +85,12 @@ class ResultAdapter {
                 $entityManager->flush();
             } catch (Throwable $exception) {
                 echo $exception->getMessage() . PHP_EOL;
+                return true;
             }
             return true;
         } else {
             return false;
         }
-    }
-
-    public function existsResultByResultname(string $resultname): bool {
-        $entityManager = DoctrineConnector::getEntityManager();
-        $resultRepository = $entityManager->getRepository(Result::class);
-
-        if ($resultRepository->findOneBy(['username' => $resultname])) {
-            return true;
-        }
-        return false;
     }
 
     public function readResultByResultname(string $resultname): Result | null {
@@ -141,7 +133,7 @@ class ResultAdapter {
         $olduser = $userRepository->findOneBy(['username' => $oldUsername]);
 
         if (!$olduser) {
-            echo "Old user " . $newUsername . " not found" . PHP_EOL;
+            echo "Old user " . $oldUsername . " not found" . PHP_EOL;
             return false;
         }
 
@@ -158,6 +150,7 @@ class ResultAdapter {
                 return true;
             } catch (Throwable $exception) {
                 echo $exception->getMessage() . PHP_EOL;
+                return false;
             }
         }
 
