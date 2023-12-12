@@ -53,7 +53,7 @@ if (isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
             if ($userAdapter->createUser($user)) {
                 echo 'User' . $username . ' created successfully.' . PHP_EOL;
             } else {
-                echo 'Username not created' . PHP_EOL;
+                echo 'Username ' . $username . ' not created' . PHP_EOL;
             }
 
         } catch (Throwable $exception) {

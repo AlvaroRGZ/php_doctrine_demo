@@ -27,9 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $userAdapter = new UserAdapter();
 
     try {
-        $userAdapter->deleteUser($username);
-        echo '<h3>Usuario Eliminado:</h3>';
-        echo '<p>Usuario ' . $username . ' eliminado correctamente.</p>';
+        if ($userAdapter->deleteUser($username)) {
+            echo '<h3>Usuario Eliminado:</h3>';
+            echo '<p>Usuario ' . $username . ' eliminado correctamente.</p>';
+        } else {
+            echo '<p>No se pudo eliminar al usuario' . $username . '</p>';
+        }
+
     } catch (Throwable $exception) {
         echo '<p>Error: ' . $exception->getMessage() . '</p>';
     }
