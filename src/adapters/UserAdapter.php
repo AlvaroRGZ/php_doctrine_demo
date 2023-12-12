@@ -60,7 +60,6 @@ class UserAdapter {
             try {
                 $entityManager->remove($user);
                 $entityManager->flush();
-                echo 'Deleted User ' . $username . PHP_EOL;
             } catch (Throwable $exception) {
                 echo $exception->getMessage() . PHP_EOL;
             }
