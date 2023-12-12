@@ -7,7 +7,7 @@ class JSONResponse
     private string $estado;
     private string $mensaje;
 
-    public function __construct(string$estado, string$mensaje)
+    public function __construct(string $estado = '', string $mensaje = '')
     {
         $this->estado = $estado;
         $this->mensaje = $mensaje;

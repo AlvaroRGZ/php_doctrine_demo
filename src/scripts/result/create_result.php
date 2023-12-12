@@ -11,13 +11,14 @@
 require dirname(__DIR__, 3) . '/vendor/autoload.php';
 
 use MiW\Results\adapters\ResultAdapter;
+use MiW\Results\Utility\JSONResponse;
 use MiW\Results\Utility\Utils;
 
 // Carga las variables de entorno
 Utils::loadEnv(dirname(__DIR__, 3));
 
 // Obtener argumentos de la línea de comandos
-$options = getopt("n:r:");
+$options = getopt("n:r:", ["json"]);
 
 if (empty($options['n']) || empty($options['r'])) {
     echo "Usage: php create_result_command.php -n <username> -r <result>" . PHP_EOL;
@@ -31,7 +32,19 @@ $resultAdapter = new ResultAdapter();
 
 try {
     if ($resultAdapter->createResultFromScratch((int)$resultValue, $username)) {
-        echo 'Created Result: ' . $username . " points: " . $resultValue . PHP_EOL;
+        $message = 'Created Result: ' . $username . " points: " . $resultValue;
+        if (isset($options["json"])) {
+            echo new JSONResponse("success", $message) . PHP_EOL;
+        } else {
+            echo $message . PHP_EOL;
+        }
+    } else {
+        $message = 'Result: ' . $username . " points: " . $resultValue . " not created";
+        if (isset($options["json"])) {
+            echo new JSONResponse("error", $message) . PHP_EOL;
+        } else {
+            echo $message . PHP_EOL;
+        }
     }
 
 } catch (Throwable $exception) {
