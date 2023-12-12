@@ -15,6 +15,7 @@ require dirname(__DIR__, 2) . '/vendor/autoload.php';
 use MiW\Results\Entity\User;
 use MiW\Results\Utility\DoctrineConnector;
 use MiW\Results\Utility\Utils;
+use Throwable;
 
 // Carga las variables de entorno
 Utils::loadEnv(dirname(__DIR__, 2));
@@ -43,10 +44,9 @@ class UserAdapter {
         try {
             $entityManager->persist($user);
             $entityManager->flush();
-            echo 'Created User ' . $user->getUsername() . ' with ID #' . $user->getId() . PHP_EOL;
             return true;
         } catch (Throwable $exception) {
-            echo $exception->getMessage() . PHP_EOL;
+            // echo $exception->getMessage() . PHP_EOL;
             return false;
         }
     }
