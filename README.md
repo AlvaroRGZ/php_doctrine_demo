@@ -4,18 +4,30 @@ MiW: Doctrine - Gestión de Resultados
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%5E8.2-blue.svg)](http://php.net/)
 
-> 🎯 Ejemplo ORM Doctrine
+> 🎯 Usage
 
-Para desarrollar una sencilla gestión de datos se ha utilizado
-el ORM [Doctrine][doctrine]. Doctrine 2 es un Object-Relational Mapper que proporciona
-persistencia transparente para objetos PHP. Utiliza el patrón [Data Mapper][dataMapper]
-con el objetivo de obtener un desacoplamiento completo entre la lógica de negocio y la
-persistencia de los datos en los sistemas de gestión de bases de datos.
+## Línea de comandos
+Las diferentes funcionalidades de los scripts se detallan a continuación:
 
-Para su configuración, este proyecto se apoya en el componente [Dotenv][dotenv], que
-permite realizar la configuración a través de variables de entorno. De esta manera,
-cualquier configuración que pueda variar entre diferentes entornos puede ser establecida
-en variables de entorno, tal como se aconseja en la metodología [“The twelve-factor app”][12factor].
+### Usuarios
+```
+php .\read_user.php -n username [--json]
+php .\create_user.php -n username -e email -p password [--json]
+php .\delete_user.php -n username [--json]
+php .\update_user.php -o username -n newusername -e newemail -p newpassword -b [true | false] -a [true | false] [--json]
+```
+
+### Resultados
+```
+php .\read_result.php [-i id | -n username] [--json]
+php .\create_result.php -n username -r result [--json]
+php .\delete_result.php -n username [--json]
+php .\update_result.php -o username -n newusername -r newvalue [--json]
+```
+
+## Web
+En la pantalla principal aparecen los enlaces a los diferentes funcionarios de la aplicación,
+así como a las listas de datos.
 
 ## 🛠️ Instalación de la aplicación
 
