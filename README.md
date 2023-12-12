@@ -77,6 +77,8 @@ mismos parámetros (`DATABASE_NAME`, `DATABASE_USER` y `DATABASE_PASSWD`) que en
 instalación con los valores apropiados. Para lanzar la suite de pruebas se debe ejecutar:
 ```
 $ ./bin/phpunit [--testdox] [--coverage-text] [-v]
+$ ./bin/phpunit --testdox --display-warnings
+$ ./bin/phpunit --testdox --display-warnings > last_phpunit_result.txt
 ```
 
 [12factor]: https://www.12factor.net/es/
