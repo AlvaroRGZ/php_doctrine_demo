@@ -11,6 +11,7 @@
 
 namespace MiW\Results\Tests\Entity;
 
+use DateTime;
 use MiW\Results\Entity\{ Result, User };
 
 /**
@@ -39,7 +40,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
     {
         $this->user = new User();
         $this->user->setUsername(self::USERNAME);
-        $this->time = new \DateTime('now');
+        $this->time = new DateTime('now');
         $this->result = new Result(
             self::POINTS,
             $this->user,
@@ -60,9 +61,9 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructor(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertEquals(self::POINTS, $this->result->getResult());
+        self::assertSame($this->user, $this->result->getUser());
+        self::assertSame($this->time, $this->result->getTime());
     }
 
     /**
@@ -73,13 +74,11 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetId():void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertEquals(0, $this->result->getId());
     }
 
     /**
-     * Implement testUsername().
+     * Implement testResult().
      *
      * @covers \MiW\Results\Entity\Result::setResult
      * @covers \MiW\Results\Entity\Result::getResult
@@ -87,9 +86,8 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testResult(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->result->setResult(100);
+        self::assertEquals(100, $this->result->getResult());
     }
 
     /**
@@ -101,9 +99,10 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testUser(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $newUser = new User();
+        $newUser->setUsername('NewUser');
+        $this->result->setUser($newUser);
+        self::assertSame($newUser, $this->result->getUser());
     }
 
     /**
@@ -115,9 +114,9 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testTime(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $newTime = new DateTime('tomorrow');
+        $this->result->setTime($newTime);
+        self::assertSame($newTime, $this->result->getTime());
     }
 
     /**
@@ -128,9 +127,7 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testToString(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertIsString((string)$this->result);
     }
 
     /**
@@ -141,8 +138,13 @@ class ResultTest extends \PHPUnit\Framework\TestCase
      */
     public function testJsonSerialize(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $expected = [
+            'id' => 0,
+            'result' => self::POINTS,
+            'user' => $this->user,
+            'time' => $this->time->format('Y-m-d H:i:s'),
+        ];
+
+        self::assertSame($expected, $this->result->jsonSerialize());
     }
 }

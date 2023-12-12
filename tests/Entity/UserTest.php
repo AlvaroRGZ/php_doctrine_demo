@@ -1,17 +1,9 @@
 <?php
 
-/**
- * tests/Entity/UserTest.php
- *
- * @category EntityTests
- * @package  MiW\Results\Tests
- * @license  https://opensource.org/licenses/MIT MIT License
- * @link     https://www.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
- */
-
 namespace MiW\Results\Tests\Entity;
 
 use MiW\Results\Entity\User;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class UserTest
@@ -19,9 +11,9 @@ use MiW\Results\Entity\User;
  * @package MiW\Results\Tests\Entity
  * @group   users
  */
-class UserTest extends \PHPUnit\Framework\TestCase
+class UserTest extends TestCase
 {
-    private User $user;
+    private User $user, $user1;
 
     /**
      * Sets up the fixture.
@@ -30,6 +22,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->user = new User();
+        $this->user1 = new User('test', 'test@mail.es', 'test', true, false);
     }
 
     /**
@@ -37,9 +30,8 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructor(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertInstanceOf(User::class, $this->user);
+        self::assertInstanceOf(User::class, $this->user1);
     }
 
     /**
@@ -47,9 +39,9 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetId(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        // Assuming that getId() returns null initially
+        self::assertEquals(0, $this->user->getId());
+        self::assertEquals(0, $this->user1->getId());
     }
 
     /**
@@ -58,9 +50,10 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetSetUsername(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $username = 'test_user';
+        $this->user->setUsername($username);
+        self::assertSame($username, $this->user->getUsername());
+        self::assertSame('test', $this->user1->getUsername());
     }
 
     /**
@@ -69,9 +62,10 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetSetEmail(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $email = 'test@example.com';
+        $this->user->setEmail($email);
+        self::assertSame($email, $this->user->getEmail());
+        self::assertSame('test@mail.es', $this->user1->getEmail());
     }
 
     /**
@@ -80,9 +74,9 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testIsSetEnabled(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->user->setEnabled(true);
+        self::assertTrue($this->user->isEnabled());
+        self::assertTrue($this->user1->isEnabled());
     }
 
     /**
@@ -91,9 +85,9 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testIsSetAdmin(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->user->setIsAdmin(true);
+        self::assertTrue($this->user->isAdmin());
+        self::assertFalse($this->user1->isAdmin());
     }
 
     /**
@@ -102,9 +96,9 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetValidatePassword(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $password = 'test_password';
+        $this->user->setPassword($password);
+        self::assertTrue($this->user->validatePassword($password));
     }
 
     /**
@@ -112,9 +106,10 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testToString(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $username = 'test_user';
+        $this->user->setUsername($username);
+        self::assertSame('[User:   0 -            test_user -                                - 0 - 0]', $this->user->__toString());
+        self::assertSame('[User:   0 -                 test -                   test@mail.es - 1 - 0]', $this->user1->__toString());
     }
 
     /**
@@ -122,8 +117,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
      */
     public function testJsonSerialize(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        self::assertIsArray($this->user->jsonSerialize());
+        self::assertIsArray($this->user1->jsonSerialize());
     }
 }
