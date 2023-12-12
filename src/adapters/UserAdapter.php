@@ -119,6 +119,7 @@ class UserAdapter {
                 return true;
             } catch (Throwable $exception) {
                 echo $exception->getMessage() . PHP_EOL;
+                return false;
             }
         }
 
